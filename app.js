@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 const color = document.getElementsByClassName("jsColor");
 
 // pixel manipulating size : pixel modifier에 사이즈를 줌 /
-canvas.width = 700;
+canvas.width = 1200;
 canvas.height = 700;
 
 //default 선의 기본값 색상 & 라인 두께
