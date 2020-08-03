@@ -3,6 +3,7 @@ const ctx = canvas.getContext("2d");
 const color = document.getElementsByClassName("jsColor");
 const range = document.getElementById("js-range");
 const mode = document.getElementById("jsMode");
+const save = document.getElementById("jsSave");
 
 // 기본 컬러  stroke & fill
 const INITIAL_COLOR = "#2c2c2c";
@@ -11,6 +12,9 @@ const INITIAL_COLOR = "#2c2c2c";
 canvas.width = 1200;
 canvas.height = 700;
 
+// default color of canvas
+ctx.fillStyle = "white";
+ctx.fillRect(0,0,1200,700);
 //default 선의 기본값 색상 & 라인 두께
 ctx.strokeStyle = INITIAL_COLOR;
 ctx.fillStyle = INITIAL_COLOR;
@@ -68,9 +72,24 @@ function handleModeClick() {
 // canvas click for Fill
 function handleCanvasClick() {
   if (filling) {
-    ctx.fillRect(0, 0, 1200, 700); // pixel manipulating size
+    ctx.fillRect(0, 0, 1200, 700); // set to ixel manipulating size
   }; 
 }
+
+// 이미지 우 클릭 저장 방지 함수 
+function contextMU(event){
+  event.preventDefault();
+}
+
+// SAVE 버튼 클릭 시 파일 다운로드 
+function handleSaveClick(){
+    const image = canvas.toDataURL("image.jpeg");
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "HJP's PaintJS";   //  <a download />
+    link.click();
+}
+
 
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
@@ -78,6 +97,7 @@ if (canvas) {
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
   canvas.addEventListener("click", handleCanvasClick);
+  canvas.addEventListener("contextmenu", contextMU);
 }
 
 // Color Change Event Listner
@@ -93,4 +113,8 @@ if (range) {
 // Button jsMode :: event Listenr
 if (mode) {
   mode.addEventListener("click", handleModeClick);
+}
+
+if(save) {
+  save.addEventListener("click", handleSaveClick);
 }
